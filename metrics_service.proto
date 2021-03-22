@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package logger;
+package metrics_service;
 
 import "google/protobuf/timestamp.proto";
 
