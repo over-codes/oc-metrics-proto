@@ -47,8 +47,23 @@ message LoadMetricsRequest {
     ValueType value_type = 3;
 }
 
+message CompressedMetric {
+    string identifier = 1;
+
+    message TimeValue {
+        google.protobuf.Timestamp when = 2;
+    
+        oneof Value {
+            double double_value = 4;
+            string string_value = 5;
+        }
+    }
+
+    repeated TimeValue time_values = 2;
+}
+
 message LoadMetricsResponse {
-    repeated Metric metrics = 1;
+    repeated CompressedMetric metrics = 1;
 }
 
 service MetricsService {
