@@ -21,6 +21,21 @@ message Metric {
     }
 }
 
+message CompressedMetric {
+    string identifier = 1;
+
+    message TimeValue {
+        google.protobuf.Timestamp when = 2;
+    
+        oneof Value {
+            double double_value = 4;
+            string string_value = 5;
+        }
+    }
+
+    repeated TimeValue time_values = 2;
+}
+
 message RecordMetricsRequest {
     repeated Metric metrics = 1;
 }
@@ -45,21 +60,9 @@ message LoadMetricsRequest {
     // value type to search for; generally, we expect all metrics to be of the same
     // type, but the ensures clean responses
     ValueType value_type = 3;
-}
 
-message CompressedMetric {
-    string identifier = 1;
-
-    message TimeValue {
-        google.protobuf.Timestamp when = 2;
-    
-        oneof Value {
-            double double_value = 4;
-            string string_value = 5;
-        }
-    }
-
-    repeated TimeValue time_values = 2;
+    // the maximum number of time values to return per metric
+    int64 max_time_values = 4;
 }
 
 message LoadMetricsResponse {
