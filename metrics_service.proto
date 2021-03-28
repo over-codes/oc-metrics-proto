@@ -69,10 +69,26 @@ message LoadMetricsResponse {
     repeated CompressedMetric metrics = 1;
 }
 
+message ListMetricsRequest {
+    string prefix = 1;
+}
+
+message ListMetricsResponse {
+    message ListMetric {
+        string identifier = 1;
+        google.protobuf.Timestamp last_timestamp = 2;
+    }
+
+    repeated ListMetric metrics_list = 1;
+}
+
 service MetricsService {
     rpc RecordMetrics(RecordMetricsRequest)
         returns (RecordMetricsResponse);
     
     rpc LoadMetrics(LoadMetricsRequest)
         returns (LoadMetricsResponse);
+    
+    rpc ListMetrics(ListMetricsRequest)
+        returns (ListMetricsResponse);
 }
